@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Permisos Perfiles Seguridad</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0A1E3A;
+      color: #E0E0E0;
+      margin: 0;
+      padding: 40px;
+    }
+    .formulario {
+      background: #122A4A;
+      padding: 20px 30px;
+      border-radius: 6px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    h2, p {
+      color: #E0E0E0;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    select, input[type=text] {
+      background: #20456D;
+      color: white;
+      border: 1px solid #3A5A8C;
+      padding: 6px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #3A5A8C;
+      text-align: center;
+    }
+    th {
+      background-color: #163754;
+    }
+    input[type=checkbox] {
+      width: 18px;
+      height: 18px;
+    }
+    .footer {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #A0A0A0;
+    }
+    .option-cell {
+      text-align: left;
+      color: #E0E0E0;
+    }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <h2>Permisos Perfiles Seguridad de Registro Academico</h2>
+    <p>Gestión de las opciones de seguridad del perfil</p>
+
+    <div class="form-row">
+      <div>
+        <label for="perfil">Perfil de seguridad *</label><br><select id="modulo">          
+          <option value="Administradores">Administradores</option>
+          <option value="Registro">Registro</option>
+          <option value="Coordinadores">Coordinadores</option>          
+          <option value="Docentes">Docentes</option>
+        </select>
+      </div>
+      <div>
+        <label for="modulo">Módulo</label><br>
+        <select id="modulo">          
+          <option value="administradores">Administradores</option>          
+          <option value="administradores">Docentes</option>
+          <option value="registro">Registro</option>
+          <option value="coordinadores">Coordinadores</option>
+        </select>
+      </div>
+      <div>
+        <label for="menu">Catalogo</label><br>
+        <select id="menu">          
+          <option value="Sesiones">Sesiones</option>
+          <option value="Grupos">Grupos</option>
+          <option value="Salones">Salones</option>
+          <option value="Niveles">Niveles</option>          
+          <option value="Programas">Programas</option>          
+          <option value="Modalidades">Modalidades</option>          
+          <option value="Cronogramas">Cronogramas</option>
+        </select>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Permiso</th>
+          <th>Opción</th>
+          <th>Consultar</th>
+          <th>Insertar</th>
+          <th>Actualizar</th>
+          <th>Eliminar</th>
+          <th>Elementos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="checkbox" checked></td>
+          <td class="option-cell">Distrbucion Academico</td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" checked></td>
+          <td class="option-cell">Gestion de Modulos</td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox" checked></td>
+          <td class="option-cell">Matricula Estudiantil</td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox" checked></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td class="option-cell">Crear Aulas</td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td class="option-cell">crear Grupos</td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td class="option-cell">Crear Sesiones</td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"></td>
+          <td class="option-cell">Administradores</td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+          <td><span>☰</span></td>
+        </tr>
+        <tr>
+          <td><input type="checkbox"
