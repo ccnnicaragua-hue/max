@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Menú con Subopciones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    select {
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+
+    li {
+      margin-bottom: 5px;
+      position: relative;
+    }
+
+    li ul {
+      margin-top: 5px;
+      padding-left: 20px;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <label for="perfil"><strong>Selecciona un perfil:</strong></label>
+  <select id="perfil">
+    <option value="">-- Elige una opción --</option>
+    <option value="registro">Registro</option>
+    <option value="coordinadores">Coordinadores</option>
+    <option value="docentes">Docentes</option>
+    <option value="administradores">Administradores</option>
+  </select>
+
+  <div id="contenido"></div>
+
+  <script>
+    const contenido = document.getElementById('contenido');
+    const perfilField = document.getElementById('perfil');
+
+    const permsByUser = {
+      registro: {
+        perfil: 'Registro Académico',
+        permisos: [
+          'Crear estudiantes',
+          'Matrícula Estudiantil',
+          'Exámenes de ubicación',
+          'Cambio de Programa',
+          'Cambio de Sede',
+          'Cambio de Horario'
+        ]
+      },
+      coordinadores: {
+        perfil: 'Coordinador Académico',
+        permisos: [
+          'Lista de Docentes',
+          'Crear Docentes',
+          'Seiones',
+          'Grupos',
+          'Niveles',
+          'Salones',
+          'Progrmas',
+          'Modalidades',
+          'Cronograma/Horarios',
+          'Cierre de Notas'
+        ]
+      },
+      docentes: {
+        perfil: 'Docentes',
+        permisos: [
+          {
+            nombre: 'Cuaderno de trabajo',
+            subopciones: ['Control de asistencia']
+          },
+          'Calificaciones',
+          'Seiones',
+          'Grupos',
+          'Niveles',
+          'Salones',
+          'Programas',
+          'Cronograma/Horarios',
+          'Cierre de Notas'
+        ]
+      },
+      administradores: {
+        perfil: 'Administrador',
+        permisos: [
+          'Configuración del Sistema',
+          'Auditoría',
+          'Gestión de Roles',
+          'Lista de Docentes',
+          'Crear Docentes',
+          'Seiones',
+          'Grupos',
+          'Niveles',
+          'Salones',
+          'Progrmas',
+          'Modalidades',
+          'Cronograma/Horarios',
+          'Cierre de Notas'
+        ]
+      }
+    };
+
+    perfilField.addEventListener('change', () => {
+      const perfilSeleccionado = perfilField.value;
+      contenido.innerHTML = ''; // Limpiar contenido anterior
+
+      if (perfilSeleccionado && permsByUser[perfilSeleccionado]) {
+        const { perfil, permisos } = permsByUser[perfilSeleccionado];
+        const titulo = document.createElement('h2');
+        titulo.textContent = perfil;
+        contenido.appendChild(titulo);
+
+        const lista = document.createElement('ul');
+
+        permisos.forEach(item => {
+          const li = document.createElement('li');
+
+          if (typeof item === 'string') {
+            li.textContent = item;
+          } else if (typeof item === 'object' && item.nombre) {
+            li.textContent = item.nombre;
+
+            if (Array.isArray(item.subopciones) && item.subopciones.length > 0) {
+              const subLista = document.createElement('ul');
+              item.subopciones.forEach(sub => {
+                const subLi = document.createElement('li');
+                subLi.textContent = sub;
+                subLista.appendChild(subLi);
+              });
+              li.appendChild(subLista);
+            }
+          }
+
+          lista.appendChild(li);
+        });
+
+        contenido.appendChild(lista);
+      }
+    });
+  </script>
+
+</body>
+</html>
