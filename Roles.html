@@ -28,11 +28,15 @@
     <div class="form-row">
       <label for="usuario">Selecciona Usuario:</label>
       <select id="usuario">
-        <option value="">-- Usuario --</option>
-        <option value="registro">Walter Gómez</option>
-        <option value="coordinadores">Silvia Reyes</option>
-        <option value="administradores">Max Somarriba</option>        
-        <option value="docentes">Adolfo aburto</option>
+        <option value="">-- Usuario --</option>        
+        <option value="administradores">Max Somarriba</option>         
+        <option value="administradores">Walter Gomez</option> 
+        <option value="registro">Ana Reyes</option>        
+        <option value="registro">Xochilt Hernandez</option> 
+        <option value="coordinadores">Silvia Reyes</option>        
+        <option value="coordinadores">Jorge Moreno</option> 
+        <option value="docentes">Adolfo Aburto</option>        
+        <option value="docentes">Blanca Sandino</option> 
       </select>
       <label for="perfil">Perfil:</label>
       <input type="text" id="perfil" disabled placeholder="Perfil del usuario">
@@ -45,6 +49,7 @@
     const perfilField = document.getElementById('perfil');
     const permsByUser = {
       registro: { perfil: 'Registro Académico', permisos: ['Crear estudiantes','Matrícula Estudiantil','Exámenes de ubicación','Cambio de Programa','Cambio de Sede','Cambio de Horario'] },
+     
       coordinadores: { perfil: 'Coordinador Académico', permisos: ['Lista de Docentes','Crear Docentes','Seiones','Grupos','Niveles','Salones','Progrmas',
                                                                    'Modalidades','Cronograma/Horarios','Cierre de Notas'] },
       docentes: { perfil: 'Docentes', permisos: ['Lista de Estudiantes','Calificaciones','Seiones','Grupos','Niveles','Salones','Programas','Cronograma/Horarios','Cierre de Notas'] },
@@ -79,6 +84,7 @@
   </script>
 </body>
 </html>
+
 
 
 
