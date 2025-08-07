@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Permisos por Usuario y Perfil</title>
+  <style>
+    body { font-family: Arial; background: #0A1E3A; color: #E0E0E0; padding: 20px; }
+    .formulario { background: #122A4A; padding: 20px; border-radius: 6px; max-width: 800px; margin: auto; }
+    .form-row { display: flex; gap: 30px; align-items: center; margin-bottom: 20px; }
+    .form-row select, .form-row input[type="text"] {
+      background: #20456D;
+      color: #E0E0E0;
+      border: 1px solid #3A5A8C;
+      border-radius: 4px;
+      padding: 6px;
+      flex: 1;
+    }
+    .form-row label { flex: 0 0 150px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { background: #163754; padding: 8px; }
+    td { padding: 8px; text-align: center; border-bottom: 1px solid #3A5A8C; }
+    .option-cell { text-align: left; color: #E0E0E0; }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <h2>Permisos por Usuario</h2>
+    <div class="form-row">
+      <label for="usuario">Selecciona Usuario:</label>
+      <select id="usuario">
+        <option value="">-- Usuario --</option>
+        <option value="registro">Walter Gómez</option>
+        <option value="coordinadores">Silvia Reyes</option>
+        <option value="administradores">Ana Reyes</option>
+      </select>
+      <label for="perfil">Perfil:</label>
+      <input type="text" id="perfil" disabled placeholder="Perfil del usuario">
+    </div>
+    <div id="contenido"></div>
+  </div>
+
+  <script>
+    const contenido = document.getElementById('contenido');
+    const perfilField = document.getElementById('perfil');
+    const permsByUser = {
+      registro: { perfil: 'Registro Académico', permisos: ['Crear estudiantes','Matrícula Estudiantil','Exámenes de ubicación','Cambio de Programa'] },
+      coordinadores: { perfil: 'Coordinador Académico', permisos: ['Crear Docentes','Gestionar Grupos','Asignar Salones','Cierre de Notas','Ver Listas Estudiantes'] },
+      administradores: { perfil: 'Administrador', permisos: ['Configuración del Sistema','Auditoría','Gestión de Roles'] }
+    };
+
+    document.getElementById('usuario').addEventListener('change', function() {
+      const key = this.value;
+      if (!key || !permsByUser[key]) {
+        perfilField.value = '';
+        contenido.innerHTML = '';
+        return;
+      }
+      const { perfil, permisos } = permsByUser[key];
+      perfilField.value = perfil;
+
+      let html = `<table>
+        <thead><tr><th>Permiso</th><th>Consultar</th><th>Insertar</th><th>Actualizar</th><th>Eliminar</th></tr></thead><tbody>`;
+      permisos.forEach(p => {
+        html += `<tr><td class="option-cell">${p}</td>
+          <td><input type="checkbox" checked></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+          <td><input type="checkbox"></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      contenido.innerHTML = html;
+    });
+  </script>
+</body>
+</html>
+
+
+
+
