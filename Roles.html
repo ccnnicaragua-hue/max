@@ -31,7 +31,7 @@
         <option value="">-- Usuario --</option>
         <option value="registro">Walter Gómez</option>
         <option value="coordinadores">Silvia Reyes</option>
-        <option value="administradores">Ana Reyes</option>
+        <option value="administradores">Max Somarriba</option>
       </select>
       <label for="perfil">Perfil:</label>
       <input type="text" id="perfil" disabled placeholder="Perfil del usuario">
@@ -46,7 +46,8 @@
       registro: { perfil: 'Registro Académico', permisos: ['Crear estudiantes','Matrícula Estudiantil','Exámenes de ubicación','Cambio de Programa','Cambio de Sede','Cambio de Horario'] },
       coordinadores: { perfil: 'Coordinador Académico', permisos: ['Lista de Docentes','Crear Docentes','Seiones','Grupos','Niveles','Salones','Progrmas',
                                                                    'Modalidades','Cronograma/Horarios','Cierre de Notas'] },
-      administradores: { perfil: 'Administrador', permisos: ['Configuración del Sistema','Auditoría','Gestión de Roles'] }
+      administradores: { perfil: 'Administrador', permisos: ['Configuración del Sistema','Auditoría','Gestión de Roles','Lista de Docentes','Crear Docentes','Seiones','Grupos','Niveles','Salones','Progrmas',
+                                                                   'Modalidades','Cronograma/Horarios','Cierre de Notas','Lista de Docentes','Crear Docentes','Seiones','Grupos','Niveles','Salones','Progrmas'] }
     };
 
     document.getElementById('usuario').addEventListener('change', function() {
@@ -75,6 +76,7 @@
   </script>
 </body>
 </html>
+
 
 
 
