@@ -4,74 +4,6 @@
   <meta charset="UTF‑8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Módulo de Registro Académico</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    <!-- estilo para las traducciones -->
-    :root {
-      --primario: #0a2647;
-      --acento: #fca311;
-      --fondo: #f9f9f9;
-      --texto: #333;
-    }
-    .modal-dialog {
-      max-width: 600px;
-      margin: 30px auto;
-    }
-    .modal-content {
-      background: var(--fondo);
-      color: var(--texto);
-      border-radius: 10px;
-      animation: fadeInUp 0.4s ease-out;
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .modal-header {
-      background: var(--primario);
-      color: #fff;
-      border-bottom: 2px solid var(--acento);
-    }
-    .form-label {
-      font-weight: bold;
-      color: var(--primario);
-    }
-    .form-control, .form-select {
-      border: 2px solid var(--primario);
-      border-radius: 4px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .form-control:focus, .form-select:focus {
-      border-color: var(--acento);
-      box-shadow: 0 0 8px rgba(252, 163, 17, 0.3);
-    }
-    .btn-primary {
-      background: var(--acento);
-      color: var(--primario);
-      border: none;
-      font-size: 1.1em;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .btn-primary:hover {
-      background: var(--primario);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background: var(--primario);
-      color: white;
-    }
-  </style>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -92,34 +24,243 @@
 </head>
 <body>
 
-<header>
-  <div>Módulo Resgistro Académico</div>
-</header>
-
+<header>📚 Módulo de Registro Académico CCNN</header>
 
 <nav>
   <ul>
     <li><a href="#">Estudiantes</a>
       <ul>
-        <li><a href="#" onclick="mostrarContenido('')">Registrar Estudiante</a></li>
+       <!-- <li><a href="#" onclick="mostrarContenido('')"></a></li> -->
+
+        <button type="button" data-bs-toggle="modal" data-bs-target="#formModal1">Registrar Estudiante</button>
+
         <li>
           <!-- Botón que dispara el modal con el formulario -->
-          <button type="button" data-bs-toggle="modal2" data-bs-target="#formModal2">Datos de Estudiante</button>
-          
-          <button type="button" data-bs-toggle="modal1" data-bs-target="#formModal1">Lista Oficial</button>
+                  
+          <button type="button" data-bs-toggle="modal" data-bs-target="#formModal2">Lista Oficial</button>
+
         </li>
       </ul>
     </li>
     <li><a href="#">Admisiones</a>
       <ul>
-          <li><a href="#" onclick="mostrarContenido('Registrar Curso')">Programa</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Sedes</a></li>
-                <li><a href="#" onclick="mostrarContenido('Registrar Curso')">Estado de Estudiantes</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Sesion</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Nivel</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Grupo</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Bloqueos</a></li>
-                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Test de Ubicacion</a></li>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataGridView con Buscador, Botón y Grupo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #f3f4f6;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-bloquear {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            background-color: #dc3545; /* Rojo para bloquear */
+            transition: 0.3s;
+        }
+
+        .btn-desbloquear {
+            background-color: #28a745; /* Verde para desbloquear */
+        }
+
+        .bloqueado {
+            background-color: #ffe6e6 !important;
+            color: #a94442;
+        }
+
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+                width: 100%;
+            }
+            tr {
+                margin-bottom: 15px;
+            }
+            td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Registro de Estudiantes</h2>
+
+    <!-- Buscador -->
+    <input type="text" id="buscador" placeholder="Buscar estudiante...">
+
+    <table id="tablaEstudiantes">
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Programa</th>
+                <th>Sedes</th>
+                <th>Sesión</th>
+                <th>Docente</th>
+                <th>Grupo</th>
+                
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Ingeniería en Sistemas -->
+            <tr>
+                <td>Juan Pérez</td>
+                <td>Global_teens</td>
+                <td>Sede Central</td>
+                <td>R006</td>
+                <td>Blanca Sandino</td>
+                <td>Nivel: 1, Horario: 8:00-12:00, Room: 18, Sesión: R006</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+            <tr>
+                <td>Walter Gómez</td>
+                <td>Adultos Intensivo</td>
+                <td>Sede Aldeas SOS</td>
+                <td>R005</td>
+                <td>Jorge Cruz</td>
+                <td>Nivel: 14, Horario: 8:00-12:00, Galeria: 1, Sesión: R005</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+
+            <!-- Administración -->
+            <tr>
+                <td>Luis Rodríguez</td>
+                <td>Children</td>
+                <td>Sede Central</td>
+                <td>R008</td>
+                <td>Milton Lazo</td>
+                <td>Nivel: 8, Horario: 1:00-5:00, Blue Room: , Sesión: R008</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+            <tr>
+                <td>Ana Reyes</td>
+                <td>Adultos Saturday</td>
+                <td>Sede Teresiano</td>
+                <td>R007</td>
+                <td>Jose Velasquez</td>
+                <td>Nivel: 14, Horario: 6:00-8:00, Room: 12, Sesión: R001</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+
+            <!-- Diseño Gráfico -->
+            <tr>
+                <td>Xochilt Molares</td>
+                <td>Adultos Regular</td>
+                <td>Sede Loyola</td>
+                <td>R007</td>
+                <td>Katerin Arcia</td>
+                <td>Nivel: 7, Horario: 10:00-12:00, Room: 5, Sesión: R003</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+            <tr>
+                <td>Sofía Herrera</td>
+                <td>Small Wonder</td>
+                <td>Sede Central</td>
+                <td>R003</td>
+                <td>Gabriela Jarquin</td>
+                <td>Nivel: 1, Horario: 4:00-6:00, Room: 3, Sesión: R002</td>
+                
+                <td><button class="btn-bloquear">Bloquear</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Filtrar por estudiante
+        document.getElementById("buscador").addEventListener("keyup", function() {
+            let filtro = this.value.toLowerCase();
+            let filas = document.querySelectorAll("#tablaEstudiantes tbody tr");
+
+            filas.forEach(fila => {
+                let nombre = fila.cells[0].textContent.toLowerCase(); // Columna Estudiante
+                fila.style.display = nombre.includes(filtro) ? "" : "none";
+            });
+        });
+
+        // Bloquear / Desbloquear estudiante
+        document.querySelectorAll(".btn-bloquear").forEach(boton => {
+            boton.addEventListener("click", function() {
+                let fila = this.closest("tr");
+
+                if (this.textContent === "Bloquear") {
+                    this.textContent = "Desbloquear";
+                    this.classList.add("btn-desbloquear");
+                    fila.classList.add("bloqueado");
+                } else {
+                    this.textContent = "Bloquear";
+                    this.classList.remove("btn-desbloquear");
+                    fila.classList.remove("bloqueado");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+
       </ul>
     </li>
          <li><a href="#">Reportes</a>
@@ -133,10 +274,15 @@
                                 
             </ul>
         </li>
-             <li><a href="#">Traducciones</a>
+                <li><a href="#">Traducciones</a>
             <ul>
-                 <!-- Botón que dispara el modal con el formulario -->
-          <button type="button" data-bs-toggle="modal" data-bs-target="#FormTraducciones">Registro de traducciones</button>                            
+                <li><a href="#" onclick="mostrarContenido('Ingresar Notas')">N recibo</a></li>
+                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Nombre</a></li>
+                <li><a href="#" onclick="mostrarContenido('Consultar Notas')">Telefono</a></li>
+                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Cantidad de Documentos</a></li>
+                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Costo de Traduciones</a></li>
+                <li><a href="#" onclick="mostrarContenido('Consultar Curso')">Fecha de solicitud / Entrega</a></li>               
+                                
             </ul>
         </li>
     <!-- Resto del menú... -->
@@ -145,8 +291,11 @@
 
 </script>
 
-  <!-- Modal con tu formulario completo Registro de Estudiantes -->
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+<!------------------------------------------------------------------------------------------------------------------->
+
+<!-- Modal con tu formulario completo Registro de Estudiantes ------------------------------------------------------>
+
+<div class="modal fade" id="formModal1" tabindex="-1" aria-labelledby="formModalLabel1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -165,7 +314,22 @@
               id="campo1"
               name="campo1"
               class="form-control"
-              placeholder="Buscar estudiantes"
+              placeholder="Datos"
+              autocomplete="nope"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              required
+            >
+          </div>
+
+          <div class="mb-3">
+            <label for="campo1" class="form-label">Numero de Cedula</label>
+            <input
+              type="search"
+              id="campo1"
+              name="campo1"
+              class="form-control"
+              placeholder="Identifiacion"
               autocomplete="nope"
               readonly
               onfocus="this.removeAttribute('readonly');"
@@ -179,36 +343,36 @@
               <option value="adultos">Managua</option>
               <option value="ninos">Masaya</option>
               <option value="global_teens">Granada</option>
-              <option value="intensivo">Curso intensivo</option>
+              <option value="intensivo">Leon</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="sede" class="form-label">Sede</label>
+            <label for="sede" class="form-label">Genero</label>
             <select id="sede" name="sede" class="form-select" required>
               <option value="" disabled selected>Selecciona…</option>
-              <option value="central">Sede Central</option>
-              <option value="loyola">Loyola</option>
+              <option value="central">Masculino</option>
+              <option value="loyola">Femenino</option>
+              <option value="loyola">Transformer</option>
             </select>
           </div>
+          
           <div class="mb-3">
-            <label for="modalidad" class="form-label">Modalidad</label>
-            <select id="modalidad" name="modalidad" class="form-select" required>
-              <option value="" disabled selected>Selecciona modalidad…</option>
-              <option value="presencial">Presencial</option>
-              <option value="semipresencial">Semipresencial</option>
-              <option value="virtual">Virtual</option>
-            </select>
+            <label for="campo1" class="form-label">Telefono</label>
+            <input
+              type="search"
+              id="campo1"
+              name="campo1"
+              class="form-control"
+              placeholder="Numero"
+              autocomplete="nope"
+              readonly
+              onfocus="this.removeAttribute('readonly');"
+              required
+            >
           </div>
+
           <div class="mb-3">
-            <label for="horario_slot" class="form-label">Horario</label>
-            <select id="horario_slot" name="horario_slot" class="form-select" required>
-              <option value="" disabled selected>Selecciona horario…</option>
-              <option value="8-10">8:00 – 10:00 AM</option>
-              <option value="10-12">10:00 – 12:00 AM</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha de ingreso</label>
+            <label for="fecha" class="form-label">Fecha de Nacimiento</label>
             <input type="date" id="fecha" name="fecha" class="form-control" required>
           </div>
           <div class="mb-3">
@@ -220,7 +384,7 @@
               <option value="3">Nivel 3</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary w-100">Asignar Grupo</button>
+          <button type="submit" class="btn btn-primary w-100">Guardar</button>
         </form>
 
         <!-- Reporte -->
@@ -235,6 +399,7 @@
   </div>
 </div>
   
+<!------------------------------------------------------------------------------------------------------------------>
 
 <!-- Modal con tu formulario completo Listas Oficiales -->
 <div class="modal fade" id="formModal2" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
@@ -324,7 +489,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -364,151 +529,7 @@
     reporte.style.display = "block";
   });
 </script>
-<!-- Modal completo -->
-  <div class="modal fade" id="FormTraducciones" tabindex="-1" aria-labelledby="FormTraduccionesLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="FormTraduccionesLabel">Formulario de Traducciones</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-        </div>
-
-        <div class="modal-body">
-          <form id="formulario" autocomplete="off">
-            <div class="mb-3">
-              <label for="campo1" class="form-label">Nombres</label>
-              <input type="search" id="campo1" name="campo1" class="form-control" placeholder="Ingrese los dos Nombres" required>
-            </div>
-            <div class="mb-3">
-              <label for="apellido" class="form-label">Apellidos</label>
-              <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese los dos Apellidos" required>
-            </div>
-            <div class="mb-3">
-              <label for="recibo" class="form-label">Número de Recibo</label>
-              <input type="text" id="recibo" name="recibo" class="form-control" placeholder="Ingrese el Número de Recibo" required>
-            </div>
-            <div class="mb-3">
-              <label for="hojas" class="form-label">Cantidad de Hojas</label>
-              <input type="text" id="hojas" name="hojas" class="form-control" placeholder="Ingrese la Cantidad de Hojas" required>
-            </div>
-            <div class="mb-3">
-              <label for="solicitud" class="form-label">Fecha de Solicitud</label>
-              <input type="date" id="solicitud" name="solicitud" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label for="entrega" class="form-label">Fecha de Entrega</label>
-              <input type="date" id="entrega" name="entrega" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label for="tamano" class="form-label">Tamaño</label>
-              <select id="tamano" name="tamano" class="form-select" required>
-                <option value="" disabled selected>Seleccione</option>
-                <option value="Carta">Carta</option>
-                <option value="Legal">Legal</option>
-              </select>
-            </div>
-            <div class="mb-3">
-              <label for="costo" class="form-label">Costo</label>
-              <input type="text" id="costo" name="costo" class="form-control" placeholder="Ingrese el Costo" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Guardar</button>
-          </form>
-
-          <hr>
-
-          <div class="mb-3">
-            <input type="text" id="buscar" class="form-control" placeholder="Buscar por nombres...">
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Recibo</th>
-                <th>Hojas</th>
-                <th>Solicitud</th>
-                <th>Entrega</th>
-                <th>Tamaño</th>
-                <th>Costo</th>
-              </tr>
-            </thead>
-            <tbody id="listaRegistros"></tbody>
-          </table>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS bundle -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Script funcional -->
-  <script>
-    const form = document.getElementById('formulario');
-    const lista = document.getElementById('listaRegistros');
-    const buscar = document.getElementById('buscar');
-    const storageKey = 'traducciones';
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const datos = {
-        nombres: form.elements['campo1'].value,
-        apellidos: form.elements['apellido'].value,
-        recibo: form.elements['recibo'].value,
-        hojas: form.elements['hojas'].value,
-        solicitud: form.elements['solicitud'].value,
-        entrega: form.elements['entrega'].value,
-        tamano: form.elements['tamano'].value,
-        costo: form.elements['costo'].value,
-        id: Date.now()
-      };
-      const arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      arr.push(datos);
-      localStorage.setItem(storageKey, JSON.stringify(arr));
-      form.reset();
-      mostrarRegistros(arr);
-    });
-
-    function mostrarRegistros(regs) {
-      lista.innerHTML = '';
-      regs.forEach(r => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${r.nombres}</td>
-          <td>${r.apellidos}</td>
-          <td>${r.recibo}</td>
-          <td>${r.hojas}</td>
-          <td>${r.solicitud}</td>
-          <td>${r.entrega}</td>
-          <td>${r.tamano}</td>
-          <td>${r.costo}</td>
-        `;
-        lista.appendChild(tr);
-      });
-    }
-
-    buscar.addEventListener('input', () => {
-      const term = buscar.value.toLowerCase();
-      const regs = JSON.parse(localStorage.getItem(storageKey) || '[]');
-      mostrarRegistros(regs.filter(r => r.nombres.toLowerCase().includes(term)));
-    });
-
-    document.getElementById('FormTraducciones').addEventListener('shown.bs.modal', () => {
-      mostrarRegistros(JSON.parse(localStorage.getItem(storageKey) || '[]'));
-    });
-  </script>
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
 
