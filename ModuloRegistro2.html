@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo de Registro Académico</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+header { background: #004080; color: white; padding: 15px; text-align: center; font-size: 1.5em; }
+nav { background: #003366; }
+nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+nav ul li { position: relative; }
+nav a, nav button { display: block; padding: 14px 20px; color: white; text-decoration: none; background: none; border: none; cursor: pointer; }
+nav a:hover, nav button:hover { background: #0055aa; }
+nav ul ul { display: none; position: absolute; top: 100%; left: 0; background: #003366; min-width: 200px; flex-direction: column; }
+nav ul li:hover > ul { display: flex; }
+section { padding: 20px; }
+.bloqueado { background-color: #ffe6e6 !important; color: #a94442; }
+.btn-bloquear { background-color: #dc3545; color: white; }
+.btn-desbloquear { background-color: #28a745 !important; color: white; }
+.alert-container { position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 2000; width: 90%; max-width: 600px; }
+</style>
+</head>
+<body>
+
+<header>📚 Módulo de Registro Académico CCNN</header>
+
+<div class="alert-container" id="alertContainer"></div>
+
+<nav>
+  <ul>
+    <li><a href="#">Estudiantes</a>
+      <ul>
+        <li><button type="button" data-bs-toggle="modal" data-bs-target="#formModalRegistro">Registrar Estudiante</button></li>
+        <li><button type="button" data-bs-toggle="modal" data-bs-target="#formModalConsulta">Consulta de Estudiantes</button></li>
+      </ul>
+    </li>
+    <li><a href="#">Admisiones</a></li>
+  </ul>
+</nav>
+
+<section>
+  <h2>Tabla de Admisiones</h2>
+  <input type="text" id="buscador" class="form-control mb-2" placeholder="Buscar estudiante...">
+  <table class="table table-striped" id="tablaAdmisiones">
+    <thead>
+      <tr>
+        <th>Estudiante</th>
+        <th>Código SAP</th>
+        <th>Programa</th>
+        <th>Sede</th>
+        <th>Docente</th>
+        <th>Grupo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- Modal Registrar Estudiante -->
+<div class="modal fade" id="formModalRegistro" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formRegistro">
+        <div class="modal-header">
+          <h5 class="modal-title">Registrar Estudiante</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="nombre" class="form-control mb-2" placeholder="Nombre y Apellidos" required>
+          <input type="text" id="cedula" class="form-control mb-2" placeholder="Número de Cédula" required>
+          <input type="text" id="ciudad" class="form-control mb-2" placeholder="Ciudad" required>
+          <select id="genero" class="form-control mb-2" required>
+            <option value="" disabled selected>Seleccione Género</option>
+            <option>Masculino</option>
+            <option>Femenino</option>
+            <option>Otro</option>
+          </select>
+          <input type="text" id="telefono" class="form-control mb-2" placeholder="Teléfono" required>
+          <input type="date" id="fechaNacimiento" class="form-control mb-2" required>
+          <input type="text" id="codigo" class="form-control mb-2" placeholder="Código SAP" required>
+          <input type="text" id="programa" class="form-control mb-2" placeholder="Programa" required>
+          <input type="text" id="sede" class="form-control mb-2" placeholder="Sede" required>
+          <input type="text" id="docente" class="form-control mb-2" placeholder="Docente" required>
+          <input type="text" id="grupo" class="form-control mb-2" placeholder="Grupo" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Consulta Estudiantes -->
+<div class="modal fade" id="formModalConsulta" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Consulta de Estudiantes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered" id="tablaConsulta">
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Código SAP</th>
+              <th>Programa</th>
+              <th>Sede</th>
+              <th>Docente</th>
+              <th>Grupo</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Estudiante -->
+<div class="modal fade" id="formModalEditar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formEditar">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Estudiante</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editIndex">
+          <input type="text" id="editNombre" class="form-control mb-2" placeholder="Nombre y Apellidos" required>
+          <input type="text" id="editCedula" class="form-control mb-2" placeholder="Número de Cédula" required>
+          <input type="text" id="editCiudad" class="form-control mb-2" placeholder="Ciudad" required>
+          <select id="editGenero" class="form-control mb-2" required>
+            <option value="">Seleccione Género</option>
+            <option>Masculino</option>
+            <option>Femenino</option>
+            <option>Otro</option>
+          </select>
+          <input type="text" id="editTelefono" class="form-control mb-2" placeholder="Teléfono" required>
+          <input type="date" id="editFechaNacimiento" class="form-control mb-2" required>
+          <input type="text" id="editCodigo" class="form-control mb-2" placeholder="Código SAP" required>
+          <input type="text" id="editPrograma" class="form-control mb-2" placeholder="Programa" required>
+          <input type="text" id="editSede" class="form-control mb-2" placeholder="Sede" required>
+          <input type="text" id="editDocente" class="form-control mb-2" placeholder="Docente" required>
+          <input type="text" id="editGrupo" class="form-control mb-2" placeholder="Grupo" required>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* === Variables === */
+let estudiantesRegistrados = JSON.parse(localStorage.getItem("estudiantesRegistrados")) || [];
+let estudiantesAdmisiones = JSON.parse(localStorage.getItem("estudiantesAdmisiones")) || [];
+
+/* === Precarga de Admisiones inicial si está vacío === */
+if (estudiantesAdmisiones.length === 0) {
+  estudiantesAdmisiones = [
+    { nombre: "Max Somarriba", cedula: "", ciudad: "", genero: "", telefono: "", fechaNacimiento: "", codigo: "A10077", programa: "Global_teens", sede: "Sede Central", docente: "Blanca Sandino", grupo: "Nivel: 1, Horario: 8:00-12:00, Room: 18, Sesión: R006", bloqueado: false },
+    { nombre: "Walter Gómez", cedula: "", ciudad: "", genero: "", telefono: "", fechaNacimiento: "", codigo: "A10256", programa: "Adultos Intensivo", sede: "Sede Aldeas SOS", docente: "Jorge Cruz", grupo: "Nivel: 14, Horario: 8:00-12:00, Galeria: 1, Sesión: R005", bloqueado: false }
+  ];
+  localStorage.setItem("estudiantesAdmisiones", JSON.stringify(estudiantesAdmisiones));
+}
+
+/* === Función para mostrar alertas === */
+function mostrarAlerta(mensaje, tipo) {
+  const alertContainer = document.getElementById("alertContainer");
+  const alert = document.createElement("div");
+  alert.className = `alert alert-${tipo} text-center`;
+  alert.textContent = mensaje;
+  alertContainer.appendChild(alert);
+  setTimeout(() => alert.remove(), 3000);
+}
+
+/* === Registrar Estudiante === */
+document.getElementById("formRegistro").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const nuevo = {
+    nombre: document.getElementById("nombre").value,
+    cedula: document.getElementById("cedula").value,
+    ciudad: document.getElementById("ciudad").value,
+    genero: document.getElementById("genero").value,
+    telefono: document.getElementById("telefono").value,
+    fechaNacimiento: document.getElementById("fechaNacimiento").value,
+    codigo: document.getElementById("codigo").value,
+    programa: document.getElementById("programa").value,
+    sede: document.getElementById("sede").value,
+    docente: document.getElementById("docente").value,
+    grupo: document.getElementById("grupo").value,
+    bloqueado: false
+  };
+  estudiantesRegistrados.push(nuevo);
+  localStorage.setItem("estudiantesRegistrados", JSON.stringify(estudiantesRegistrados));
+  this.reset();
+  mostrarAlerta("Estudiante registrado correctamente", "success");
+  mostrarConsulta();
+});
+
+/* === Mostrar Consulta de Estudiantes === */
+function mostrarConsulta() {
+  const tbody = document.querySelector("#tablaConsulta tbody");
+  tbody.innerHTML = "";
+  estudiantesRegistrados.forEach((est, index) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${est.nombre}</td>
+      <td>${est.codigo}</td>
+      <td>${est.programa}</td>
+      <td>${est.sede}</td>
+      <td>${est.docente}</td>
+      <td>${est.grupo}</td>
+      <td><button class="btn btn-sm btn-success" onclick="admisionar(${index})">Admisionar</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+mostrarConsulta();
+
+/* === Admisionar Estudiante === */
+function admisionar(index) {
+  const est = estudiantesRegistrados[index];
+  estudiantesAdmisiones.push(est);
+  localStorage.setItem("estudiantesAdmisiones", JSON.stringify(estudiantesAdmisiones));
+  estudiantesRegistrados.splice(index, 1);
+  localStorage.setItem("estudiantesRegistrados", JSON.stringify(estudiantesRegistrados));
+  mostrarConsulta();
+  mostrarAdmisiones();
+  mostrarAlerta("Estudiante admisionado correctamente", "success");
+}
+
+/* === Mostrar Admisiones === */
+function mostrarAdmisiones() {
+  const tbody = document.querySelector("#tablaAdmisiones tbody");
+  tbody.innerHTML = "";
+  estudiantesAdmisiones.forEach((est, index) => {
+    const tr = document.createElement("tr");
+    if (est.bloqueado) tr.classList.add("bloqueado");
+    tr.innerHTML = `
+      <td>${est.nombre}</td>
+      <td>${est.codigo}</td>
+      <td>${est.programa}</td>
+      <td>${est.sede}</td>
+      <td>${est.docente}</td>
+      <td>${est.grupo}</td>
+      <td>
+        <button class="btn btn-sm ${est.bloqueado ? "btn-desbloquear" : "btn-bloquear"}" onclick="toggleBloqueo(${index})">${est.bloqueado ? "Desbloquear" : "Bloquear"}</button>
+        <button class="btn btn-sm btn-warning" onclick="editar(${index})">Editar</button>
+        <button class="btn btn-sm btn-danger" onclick="eliminar(${index})">Eliminar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+mostrarAdmisiones();
+
+/* === Bloquear / Desbloquear === */
+function toggleBloqueo(index) {
+  estudiantesAdmisiones[index].bloqueado = !estudiantesAdmisiones[index].bloqueado;
+  localStorage.setItem("estudiantesAdmisiones", JSON.stringify(estudiantesAdmisiones));
+  mostrarAdmisiones();
+  mostrarAlerta(estudiantesAdmisiones[index].bloqueado ? "Estudiante bloqueado" : "Estudiante desbloqueado", "warning");
+}
+
+/* === Editar Estudiante === */
+function editar(index) {
+  const est = estudiantesAdmisiones[index];
+  document.getElementById("editIndex").value = index;
+  document.getElementById("editNombre").value = est.nombre;
+  document.getElementById("editCedula").value = est.cedula;
+  document.getElementById("editCiudad").value = est.ciudad;
+  document.getElementById("editGenero").value = est.genero;
+  document.getElementById("editTelefono").value = est.telefono;
+  document.getElementById("editFechaNacimiento").value = est.fechaNacimiento;
+  document.getElementById("editCodigo").value = est.codigo;
+  document.getElementById("editPrograma").value = est.programa;
+  document.getElementById("editSede").value = est.sede;
+  document.getElementById("editDocente").value = est.docente;
+  document.getElementById("editGrupo").value = est.grupo;
+  new bootstrap.Modal(document.getElementById("formModalEditar")).show();
+}
+
+/* === Guardar Edición === */
+document.getElementById("formEditar").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const index = document.getElementById("editIndex").value;
+  estudiantesAdmisiones[index] = {
+    nombre: document.getElementById("editNombre").value,
+    cedula: document.getElementById("editCedula").value,
+    ciudad: document.getElementById("editCiudad").value,
+    genero: document.getElementById("editGenero").value,
+    telefono: document.getElementById("editTelefono").value,
+    fechaNacimiento: document.getElementById("editFechaNacimiento").value,
+    codigo: document.getElementById("editCodigo").value,
+    programa: document.getElementById("editPrograma").value,
+    sede: document.getElementById("editSede").value,
+    docente: document.getElementById("editDocente").value,
+    grupo: document.getElementById("editGrupo").value,
+    bloqueado: estudiantesAdmisiones[index].bloqueado
+  };
+  localStorage.setItem("estudiantesAdmisiones", JSON.stringify(estudiantesAdmisiones));
+  mostrarAdmisiones();
+  mostrarAlerta("Estudiante editado correctamente", "success");
+  bootstrap.Modal.getInstance(document.getElementById("formModalEditar")).hide();
+});
+
+/* === Eliminar Estudiante === */
+function eliminar(index) {
+  if (confirm("¿Seguro que quieres eliminar este estudiante?")) {
+    estudiantesAdmisiones.splice(index, 1);
+    localStorage.setItem("estudiantesAdmisiones", JSON.stringify(estudiantesAdmisiones));
+    mostrarAdmisiones();
+    mostrarAlerta("Estudiante eliminado correctamente", "danger");
+  }
+}
+
+/* === Buscador en Admisiones === */
+document.getElementById("buscador").addEventListener("keyup", function () {
+  let filtro = this.value.toLowerCase();
+  document.querySelectorAll("#tablaAdmisiones tbody tr").forEach(fila => {
+    let nombre = fila.cells[0].textContent.toLowerCase();
+    fila.style.display = nombre.includes(filtro) ? "" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
 
