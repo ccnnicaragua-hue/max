@@ -4,6 +4,74 @@
   <meta charset="UTF‑8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Módulo de Registro Académico</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    <!-- estilo para las traducciones -->
+    :root {
+      --primario: #0a2647;
+      --acento: #fca311;
+      --fondo: #f9f9f9;
+      --texto: #333;
+    }
+    .modal-dialog {
+      max-width: 600px;
+      margin: 30px auto;
+    }
+    .modal-content {
+      background: var(--fondo);
+      color: var(--texto);
+      border-radius: 10px;
+      animation: fadeInUp 0.4s ease-out;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-header {
+      background: var(--primario);
+      color: #fff;
+      border-bottom: 2px solid var(--acento);
+    }
+    .form-label {
+      font-weight: bold;
+      color: var(--primario);
+    }
+    .form-control, .form-select {
+      border: 2px solid var(--primario);
+      border-radius: 4px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--acento);
+      box-shadow: 0 0 8px rgba(252, 163, 17, 0.3);
+    }
+    .btn-primary {
+      background: var(--acento);
+      color: var(--primario);
+      border: none;
+      font-size: 1.1em;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--primario);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: var(--primario);
+      color: white;
+    }
+  </style>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -296,72 +364,142 @@
     reporte.style.display = "block";
   });
 </script>
+<!-- Modal completo -->
+  <div class="modal fade" id="FormTraducciones" tabindex="-1" aria-labelledby="FormTraduccionesLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
 
+        <div class="modal-header">
+          <h5 class="modal-title" id="FormTraduccionesLabel">Formulario de Traducciones</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
 
-  <!-- Modal con formulario sin listas desplegables -->
-<div class="modal fade" id="FormTraducciones" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
+        <div class="modal-body">
+          <form id="formulario" autocomplete="off">
+            <div class="mb-3">
+              <label for="campo1" class="form-label">Nombres</label>
+              <input type="search" id="campo1" name="campo1" class="form-control" placeholder="Ingrese los dos Nombres" required>
+            </div>
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellidos</label>
+              <input type="text" id="apellido" name="apellido" class="form-control" placeholder="Ingrese los dos Apellidos" required>
+            </div>
+            <div class="mb-3">
+              <label for="recibo" class="form-label">Número de Recibo</label>
+              <input type="text" id="recibo" name="recibo" class="form-control" placeholder="Ingrese el Número de Recibo" required>
+            </div>
+            <div class="mb-3">
+              <label for="hojas" class="form-label">Cantidad de Hojas</label>
+              <input type="text" id="hojas" name="hojas" class="form-control" placeholder="Ingrese la Cantidad de Hojas" required>
+            </div>
+            <div class="mb-3">
+              <label for="solicitud" class="form-label">Fecha de Solicitud</label>
+              <input type="date" id="solicitud" name="solicitud" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="entrega" class="form-label">Fecha de Entrega</label>
+              <input type="date" id="entrega" name="entrega" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label for="tamano" class="form-label">Tamaño</label>
+              <select id="tamano" name="tamano" class="form-select" required>
+                <option value="" disabled selected>Seleccione</option>
+                <option value="Carta">Carta</option>
+                <option value="Legal">Legal</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="costo" class="form-label">Costo</label>
+              <input type="text" id="costo" name="costo" class="form-control" placeholder="Ingrese el Costo" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Guardar</button>
+          </form>
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Traducciones</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <hr>
+
+          <div class="mb-3">
+            <input type="text" id="buscar" class="form-control" placeholder="Buscar por nombres...">
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Recibo</th>
+                <th>Hojas</th>
+                <th>Solicitud</th>
+                <th>Entrega</th>
+                <th>Tamaño</th>
+                <th>Costo</th>
+              </tr>
+            </thead>
+            <tbody id="listaRegistros"></tbody>
+          </table>
+
+        </div>
       </div>
+    </div>
+  </div>
 
-      <div class="modal-body">
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script funcional -->
+  <script>
+    const form = document.getElementById('formulario');
+    const lista = document.getElementById('listaRegistros');
+    const buscar = document.getElementById('buscar');
+    const storageKey = 'traducciones';
 
-        <form id="formulario" autocomplete="off">
-          <input type="text" name="fake1" style="display:none">
-          <input type="password" name="fake2" style="display:none">
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const datos = {
+        nombres: form.elements['campo1'].value,
+        apellidos: form.elements['apellido'].value,
+        recibo: form.elements['recibo'].value,
+        hojas: form.elements['hojas'].value,
+        solicitud: form.elements['solicitud'].value,
+        entrega: form.elements['entrega'].value,
+        tamano: form.elements['tamano'].value,
+        costo: form.elements['costo'].value,
+        id: Date.now()
+      };
+      const arr = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      arr.push(datos);
+      localStorage.setItem(storageKey, JSON.stringify(arr));
+      form.reset();
+      mostrarRegistros(arr);
+    });
 
-          <div class="mb-3">
-            <label for="campo1" class="form-label">Nombres</label>
-            <input type="search" id="campo1" name="campo1" class="form-control"
-                   placeholder="Ingrese los dos Nombres" autocomplete="nope"
-                   readonly onfocus="this.removeAttribute('readonly');" required>
-          </div>
+    function mostrarRegistros(regs) {
+      lista.innerHTML = '';
+      regs.forEach(r => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.nombres}</td>
+          <td>${r.apellidos}</td>
+          <td>${r.recibo}</td>
+          <td>${r.hojas}</td>
+          <td>${r.solicitud}</td>
+          <td>${r.entrega}</td>
+          <td>${r.tamano}</td>
+          <td>${r.costo}</td>
+        `;
+        lista.appendChild(tr);
+      });
+    }
 
-          <div class="mb-3">
-            <label for="programa" class="form-label">Apellidos</label>
-            <input type="text" id="programa" name="programa" class="form-control"
-                   placeholder="Ingrese los dos apellidos" required>
-          </div>
+    buscar.addEventListener('input', () => {
+      const term = buscar.value.toLowerCase();
+      const regs = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      mostrarRegistros(regs.filter(r => r.nombres.toLowerCase().includes(term)));
+    });
 
-          <div class="mb-3">
-            <label for="sede" class="form-label">Número de Recibo</label>
-            <input type="text" id="sede" name="sede" class="form-control"
-                   placeholder="Ingrese el Número de Recibo" required>
-          </div>
+    document.getElementById('FormTraducciones').addEventListener('shown.bs.modal', () => {
+      mostrarRegistros(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+    });
+  </script>
 
-          <div class="mb-3">
-            <label for="modalidad" class="form-label">Cantidad de Hojas</label>
-            <input type="text" id="modalidad" name="modalidad" class="form-control"
-                   placeholder="Ingrese la Cantidad de Hojas" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha de Solicitud</label>
-            <input type="date" id="fecha" name="fecha" class="form-control" required>
-          </div>
-           <div class="mb-3">
-            <label for="fecha" class="form-label">Fecha de Entrega</label>
-            <input type="date" id="fecha" name="fecha" class="form-control" required>
-          </div>
-  <div class="mb-3">
-            <label for="sede" class="form-label">Tamaño</label>
-            <select id="sede" name="sede" class="form-select" required>
-              <option value="" disabled selected>Selecciona…</option>
-              <option value="central">Carta</option>
-              <option value="loyola">Legal</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="nivel" class="form-label">Costo</label>
-            <input type="text" id="nivel" name="nivel" class="form-control"
-                   placeholder="Ingrese el Costo de la traducion" required>
-          </div>
-          <button type="submit" class="btn btn-primary w-100">Guardar</button>
-        </form>
 
       </div>
     </div>
